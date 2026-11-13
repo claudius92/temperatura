@@ -100,8 +100,8 @@
   load();
   setInterval(load, REFRESH_SECONDS * 1000);
 
-  // Scale the chart frame so it always fits the width of the box (phone or PC)
-  const CHART_W = 520, CHART_H = 330, CHART_CROP = 26;   // CHART_CROP hides the chart's own title
+ // Scale the chart frame so it fits the width and magnifies text/grid lines
+  const CHART_W = 420, CHART_H = 330, CHART_CROP = 26;   // Lower CHART_W zooms in on chart elements
   function fitChart() {
     const wrap = document.getElementById("chartwrap");
     const frame = document.getElementById("chartframe");
