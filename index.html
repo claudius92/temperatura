@@ -36,7 +36,7 @@
   const CHANNEL_ID = "2071404";
   const FIELD = 1;                 // field the temperature is stored in
   const READ_KEY = "";             // only needed if the channel is private
-  const GAUGE_MIN = -15, GAUGE_MAX = 50;
+  const GAUGE_MIN = -10, GAUGE_MAX = 50;
   const REFRESH_SECONDS = 15;      // how often the gauge asks for the latest value
   // ------------------------------
 
@@ -64,7 +64,7 @@
 
   // Scale: grey track, colored bands, labels
   add("path", { d: arc(0, 1, R), fill: "none", stroke: "#e5e5e5", "stroke-width": 14 });
-  [[-15, 15, "#1e3cff"], [15, 30, "#f2e600"], [30, 50, "#e60000"]].forEach(function (b) {
+  [[-10, 15, "#1e3cff"], [15, 30, "#f2e600"], [30, 50, "#e60000"]].forEach(function (b) {
     add("path", { d: arc(frac(b[0]), frac(b[1]), R), fill: "none", stroke: b[2], "stroke-width": 8 });
   });
   for (let v = GAUGE_MIN; v <= GAUGE_MAX; v += 10) {
