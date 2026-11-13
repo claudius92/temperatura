@@ -11,7 +11,9 @@
   .box { height: 340px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; display: flex; flex-direction: column; overflow: hidden; }
   .box h2 { margin: 0; padding: 12px 10px 12px; position: relative; z-index: 1; background: #fff; text-align: center; font: 600 17px Arial, Helvetica, sans-serif; color: #333; }
   .box iframe { flex: 1; height: auto; border: 0; border-radius: 0; }
-  .box:first-child { order: 2; }
+  .box:first-child { order: 2; height: auto; }
+  .chartwrap { position: relative; overflow: hidden; flex: 1; }
+  #chartframe { position: absolute; left: 0; top: 0; width: 520px; max-width: none; height: 330px; border: 0; transform-origin: 0 0; }
   .gaugewrap { flex: 1; display: flex; align-items: center; justify-content: center; }
   .gaugewrap svg { width: 100%; max-width: 320px; height: auto; }
   @media (max-width: 700px) { .row { grid-template-columns: 1fr; } }
@@ -21,7 +23,7 @@
 <div class="row">
   <div class="box">
     <h2>Temperatura Sediul Nou</h2>
-    <iframe scrolling="no" style="margin-top:-26px; overflow:hidden;" src="https://thingspeak.mathworks.com/channels/2071404/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=%C2%A0&type=line&xaxis=Timp&yaxis=Temp+%C2%B0C"></iframe>
+    <div class="chartwrap" id="chartwrap"><iframe id="chartframe" scrolling="no" src="https://thingspeak.mathworks.com/channels/2071404/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=%C2%A0&type=line&xaxis=Timp&yaxis=Temp+%C2%B0C"></iframe></div>
   </div>
   <div class="box">
     <h2>Temperatura Sediul Nou</h2>
@@ -97,6 +99,18 @@
 
   load();
   setInterval(load, REFRESH_SECONDS * 1000);
+
+  // Scale the chart frame so it always fits the width of the box (phone or PC)
+  const CHART_W = 520, CHART_H = 330, CHART_CROP = 26;   // CHART_CROP hides the chart's own title
+  function fitChart() {
+    const wrap = document.getElementById("chartwrap");
+    const frame = document.getElementById("chartframe");
+    const k = wrap.clientWidth / CHART_W;
+    frame.style.transform = "scale(" + k + ") translateY(-" + CHART_CROP + "px)";
+    wrap.style.minHeight = Math.round((CHART_H - CHART_CROP) * k) + "px";
+  }
+  fitChart();
+  window.addEventListener("resize", fitChart);
 </script>
 </body>
 </html>
