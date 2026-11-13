@@ -97,8 +97,17 @@
     } catch (e) { /* keep showing the last value */ }
   }
 
+  // Refresh temperature gauge
   load();
   setInterval(load, REFRESH_SECONDS * 1000);
+
+  // Force-refresh ThingSpeak chart iframe
+  const chartFrame = document.getElementById("chartframe");
+  const chartURL = chartFrame.src;
+
+  setInterval(() => {
+    chartFrame.src = chartURL + "&_=" + Date.now();
+  }, 15000);
 
  // Scale the chart frame so it fits the width and magnifies text/grid lines
   const CHART_W = 420, CHART_H = 330, CHART_CROP = 26;   // Lower CHART_W zooms in on chart elements
